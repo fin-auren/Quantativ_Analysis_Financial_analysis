@@ -231,6 +231,25 @@ This notebook conducts a historical backtest of a quantitative trading strategy 
   * **SELL Signal (-1)**: Triggered when the price is overbought (RSI > 80) **and** above the upper Bollinger Band.
 * **Execution and Position Management**: Replaces neutral signals with a forward-fill mechanism to maintain active positions until an opposing trading trigger occurs.
 
+
+# Notebook Summary Yahoo_Finance.ipynb
+
+This notebook explores financial data for **HDFC Bank (HDFCBANK.NS)** (referenced as `msft` in some initial variables) using the `yfinance` library.
+
+### 1. Dividend History Analysis (Cell `bYSyH9W6uyrA`)
+* **Action**: Fetched historical dividend data for HDFC Bank.
+* **Processing**: Parsed dates, converted dividends to numeric values, resampled data to a yearly frequency, and aggregated the total dividends per year.
+* **Visualization**: Generated a line plot ("Total Dividends vs Year") showing a clear upward trend in annual dividend payouts from late 1990s through 2024, with a notable dip around 2020.
+
+### 2. Library Inspection (Cell `RGbAIy1Ou3Vp`)
+* **Action**: Inspected the attributes and functions available within the `yfinance` library using `dir(yf)` to check capabilities.
+
+### 3. Ticker Information (Cell `0UEFBMxG7aiR`)
+* **Action**: Printed the metadata and company profile dictionary (`msft.info`) for HDFC Bank. This confirmed details such as the company name, sector (Financial Services), industry (Banks - Regional), key corporate officers, and business operations.
+
+### 4. Options Chain Exploration (Cell `XIKGGy7P7mJO`)
+* **Action**: Attempted to retrieve option contract expiration dates and chain data for `HDFCBANK.NS`.
+* **Result**: Returned an empty tuple `()` for available expiration dates. Consequently, the script determined that option chain data was unavailable for this ticker at the time of execution.
 ## 3. Backtest Results
 * **Total Strategy Return**: **30.10%**
 * **Total Buy & Hold Return**: **11.99%**
