@@ -255,3 +255,164 @@ This notebook explores financial data for **HDFC Bank (HDFCBANK.NS)** (reference
 * **Total Buy & Hold Return**: **11.99%**
 * **Visual Analysis**: Shows a performance comparison plot where the active trading strategy outperformed the static benchmark portfolio.
 
+
+# Accumulative Swing Index (ASI) Trading Strategy — Notebook Summary
+
+## Overview
+
+This notebook implements the **Accumulative Swing Index (ASI)** to identify potential trading swings and backtest basic buy/sell signals using historical financial market data.
+
+The workflow includes ASI calculation, swing high and low identification, swing-day detection, and a backtesting simulation to evaluate potential trading opportunities.
+
+The notebook contains three main code cells, each serving a distinct purpose in the trading analysis workflow.
+
+## 1\. First Cell: ASI Calculation and Swing Detection
+
+**Cell ID:** `Nutd9ZTpPLmk`
+
+### Purpose
+
+Defines the core functions required to calculate the Accumulative Swing Index and identify potential market swing points.
+
+### Key Features
+
+- **`calculate_asi`****:** Calculates the Accumulative Swing Index using the parameter `a = 0.2`.
+- **`identify_swings`****:** Identifies potential swing highs and swing lows in historical price data.
+- **`is_swing_day`****:** Checks whether the current day qualifies as a swing day based on the identified swing conditions.
+
+### Execution
+
+- Loads and processes the dataset `INDUSINDBK.csv`.
+- Applies the ASI calculation and swing detection logic.
+- Evaluates the latest trading day's swing status.
+
+### Output
+
+text
+
+```
+Today's Swing Status: Not a Swing Day
+```
+
+### Interpretation
+
+According to the implemented swing-detection logic, the latest trading day in the dataset does not qualify as a swing day.
+
+## 2\. Second Cell: ASI Calculation with an Alternative Parameter
+
+**Cell ID:** `Dz09y9jdQnEk`
+
+### Purpose
+
+Implements a similar ASI-based swing detection workflow while using a different parameter value to explore an alternative calculation configuration.
+
+### Key Features
+
+- Reuses the ASI calculation and swing identification approach.
+- Sets the ASI parameter to `a = 0.1`.
+- Evaluates swing conditions using a separate stock dataset.
+
+### Execution
+
+- Loads and processes the dataset `BANDHANBNK.csv`.
+- Calculates the ASI using the alternative parameter.
+- Checks whether the latest trading day is classified as a swing day.
+
+### Output
+
+text
+
+```
+Today's Swing Status: Not a Swing Day
+```
+
+### Interpretation
+
+The implemented logic does not identify the latest trading day in the `BANDHANBNK.csv` dataset as a swing day.
+
+Using a different ASI parameter provides an opportunity to compare strategy behavior, although the two outputs alone do not establish which parameter performs better.
+
+## 3\. Third Cell: Backtesting Simulation
+
+**Cell ID:** `aDNlO4KhPSef`
+
+### Purpose
+
+Attempts to simulate a trading strategy by pairing swing lows with subsequent swing highs to derive trade signals and calculate cumulative returns.
+
+### Key Features
+
+- Identifies potential swing-low entry points.
+- Matches swing lows with subsequent swing highs.
+- Generates potential buy and sell signals.
+- Calculates trade returns and cumulative strategy performance.
+
+### Current Status: Execution Error
+
+The cell currently raises the following error:
+
+text
+
+```
+NameError: name 'data' is not defined
+```
+
+### Cause
+
+The variable `data` is referenced before it has been initialized or loaded in the cell's execution context.
+
+The cell likely expects a Pandas DataFrame containing historical price data from a previous processing step. However, the variable may have a different name, may not have been created, or may not persist because the relevant notebook cell was not executed.
+
+### Recommended Fix
+
+Load the intended dataset and initialize `data` before running the backtesting logic.
+
+For example, if the intended dataset is `INDUSINDBK.csv`:
+
+python
+
+```
+import pandas as pd
+
+data = pd.read_csv("INDUSINDBK.csv")
+
+# Convert the date column if present.
+if "Date" in data.columns:
+    data["Date"] = pd.to_datetime(data["Date"])
+
+# Inspect the dataset before running the backtest.
+print(data.head())
+print(data.columns)
+```
+
+Ensure that the column names and data structure match the requirements of the backtesting code. If the third cell is intended to use the `BANDHANBNK.csv` dataset instead, load that file accordingly.
+
+The notebook should then be rerun in sequence to verify that the required variables and calculated swing points are available.
+
+## 4\. Overall Workflow
+
+The notebook follows this general analytical process:
+
+1. Load historical stock price data.
+2. Calculate the Accumulative Swing Index using the selected parameter.
+3. Identify potential swing highs and swing lows.
+4. Determine whether the latest trading day qualifies as a swing day.
+5. Generate buy and sell signals by matching swing lows with subsequent swing highs.
+6. Backtest the resulting signals.
+7. Calculate individual trade returns and cumulative strategy performance.
+
+## 5\. Key Findings
+
+- **ASI implementation:** Two cells implement ASI-based swing detection using different parameter values.
+- **Stock datasets:** The first two cells analyze `INDUSINDBK.csv` and `BANDHANBNK.csv`, respectively.
+- **Swing-day outputs:** Both cells report that the latest evaluated trading day is not a swing day.
+- **Backtesting limitation:** The third cell cannot currently execute because the `data` variable is undefined.
+- **Next step:** Initialize the correct DataFrame, validate the expected price columns, and rerun the backtesting simulation.
+
+## Conclusion
+
+This notebook provides a foundation for exploring swing-trading strategies using the Accumulative Swing Index. It combines technical indicator calculations, market swing detection, and an intended backtesting framework.
+
+Before drawing conclusions about profitability, the backtesting implementation should be corrected and validated. The strategy should also account for transaction costs, realistic execution prices, look-ahead bias, and appropriate risk management.
+
+The reported swing-day statuses are outputs of the current implementation; they do not independently establish the effectiveness or predictive accuracy of the strategy.
