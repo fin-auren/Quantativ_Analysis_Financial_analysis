@@ -213,3 +213,26 @@ Intrepretation:
 * Red - Call Dominance (Resistance)
 This becomes a visual map of support and resistance.
 
+# Notebook Summary
+
+This notebook conducts a historical backtest of a quantitative trading strategy on **Apple Inc. (AAPL)** stock for the year **2025**.
+
+## 1. Setup and Packages
+* Installs and imports essential quantitative analysis packages: `yfinance`, `pandas`, `numpy`, and `matplotlib`.
+
+## 2. Methodology & Quantitative Strategy
+* **Data Sourcing**: Downloads daily adjusted closing prices using the Yahoo Finance API (`yfinance`).
+* **Technical Indicators Calculated**:
+  * **Moving Average (MA)**: 50-day rolling mean.
+  * **Bollinger Bands**: 20-day rolling mean ± 2 standard deviations.
+  * **Relative Strength Index (RSI)**: 16-day rolling relative strength momentum indicator.
+* **Trading Signal Rules**:
+  * **BUY Signal (1)**: Triggered when the price is oversold (RSI < 20) **and** below the lower Bollinger Band.
+  * **SELL Signal (-1)**: Triggered when the price is overbought (RSI > 80) **and** above the upper Bollinger Band.
+* **Execution and Position Management**: Replaces neutral signals with a forward-fill mechanism to maintain active positions until an opposing trading trigger occurs.
+
+## 3. Backtest Results
+* **Total Strategy Return**: **30.10%**
+* **Total Buy & Hold Return**: **11.99%**
+* **Visual Analysis**: Shows a performance comparison plot where the active trading strategy outperformed the static benchmark portfolio.
+
