@@ -416,3 +416,147 @@ This notebook provides a foundation for exploring swing-trading strategies using
 Before drawing conclusions about profitability, the backtesting implementation should be corrected and validated. The strategy should also account for transaction costs, realistic execution prices, look-ahead bias, and appropriate risk management.
 
 The reported swing-day statuses are outputs of the current implementation; they do not independently establish the effectiveness or predictive accuracy of the strategy.
+
+# Notebook Summary: Simple Stock Trading & Technical Analysis
+
+## 1\. Overview
+
+This notebook explores two stock trading systems implemented in Python:
+
+1. **Pure Python Stock Portfolio Simulator:** A basic trading application built without external libraries.
+2. **Historical Backtesting System:** A rule-based trend-following strategy using `yfinance`, Pandas, and visualizations to evaluate historical trading performance.
+
+The notebook combines fundamental portfolio management concepts with technical analysis and historical strategy testing.
+
+## 2\. Key Components
+
+### Part A: Interactive Stock Trading Simulator (No External Libraries)
+
+This section implements a simple stock portfolio simulator using core Python programming concepts.
+
+#### Classes Defined
+
+**`Stock`**
+
+- Represents a stock using its ticker symbol and current price.
+- Supports dynamic price values for basic trading simulations.
+
+**`Portfolio`**
+
+- Maintains the available cash balance.
+- Tracks the quantities of individual stocks owned.
+- Supports basic buy and sell transactions.
+- Enforces transactional constraints, such as preventing purchases when funds are insufficient and preventing sales of shares that are not owned.
+
+#### User Interface
+
+The notebook provides a text-based terminal menu that allows users to:
+
+- Buy predefined stocks: `AAPL`, `GOOGL`, and `TSLA`.
+- Sell shares held in the portfolio.
+- View current portfolio holdings and cash balances.
+- Monitor portfolio changes after transactions.
+
+This section demonstrates object-oriented programming, transaction validation, and basic portfolio accounting without relying on external libraries.
+
+### Part B: Rule-Based Backtesting Strategy (`TATAMOTORS.NS`)
+
+This section evaluates a simple trend-following strategy using historical stock market data retrieved through the Yahoo Finance API with the `yfinance` Python library.
+
+**Backtesting period:** January 1, 2024, to April 10, 2024.
+
+#### Trading Protocols
+
+**Buying Protocol**
+
+- Generates a buy signal when the stock price increases for `b` consecutive days.
+- The strategy uses `b = 1`, meaning a single day of price increase can trigger a buy signal.
+
+**Selling Protocol**
+
+- Generates a potential sell signal when the stock price decreases for `s` consecutive days.
+- A sale is executed only when the position has generated a cumulative profit since the most recent purchase.
+- The strategy uses `s = 1`, meaning a single day of price decrease can trigger a potential sell signal.
+
+#### Functions Implemented
+
+**`get_buying_selling_days(price_data, b, s)`**
+
+- Identifies potential buy and sell signal dates.
+- Uses rolling Pandas operations to evaluate consecutive price movements.
+- Produces the dates required by the trading simulation.
+
+**`check_cumulative_percent_change(...)`**
+
+- Evaluates the percentage change between the purchase price and a potential selling price.
+- Determines whether the position has achieved a positive cumulative return.
+- Allows a sell signal to proceed only when the modeled holding period is profitable.
+
+**`get_investing_result(df_stocks, starting_funds)`**
+
+- Processes trading signals sequentially.
+- Executes purchases and sales based on the strategy rules.
+- Manages the available cash balance and stock holdings.
+- Calculates the resulting portfolio performance and cumulative return.
+
+## 3\. Backtesting Performance and Results
+
+### Strategy Configuration
+
+| Parameter | Value |
+| --- | --- |
+| Stock ticker | `TATAMOTORS.NS` |
+| Company | Tata Motors Limited |
+| Backtesting start date | January 1, 2024 |
+| Backtesting end date | April 10, 2024 |
+| Buy parameter (`b`) | 1 consecutive day of increase |
+| Sell parameter (`s`) | 1 consecutive day of decrease |
+| Initial funds | $10,000 |
+| Reported return | +16% |
+
+### Reported Performance
+
+The notebook reports a **16% return** over the backtesting period, corresponding to a cumulative return factor of `0.16`.
+
+Based on the stated initial funds of $10,000, a 16% gain would represent an illustrative profit of $1,600 and a final portfolio value of $11,600, assuming the reported return is calculated against the entire initial portfolio and all positions are valued consistently.
+
+### Visualization
+
+The notebook generates a chart showing historical closing prices alongside trading activity.
+
+The visualization includes:
+
+- **Daily Closing Prices:** Displays the historical price movement of Tata Motors.
+- **Red Dashed Lines:** Mark buy events.
+- **Blue Dashed Lines:** Mark sell events.
+- **Gray Shaded Regions:** Highlight periods during which shares are held.
+
+This chart helps illustrate how the strategy responds to short-term price movements and how long positions remain open.
+
+## 4\. Key Findings
+
+- **Portfolio Simulation:** Demonstrates basic stock trading operations, portfolio tracking, and cash management using pure Python.
+- **Technical Signal Generation:** Uses consecutive daily price movements to generate potential buy and sell signals.
+- **Profit-Based Selling:** Requires a positive cumulative return before executing a sell signal.
+- **Historical Evaluation:** Tests the strategy against historical Tata Motors price data for the specified period.
+- **Visual Analysis:** Provides a graphical representation of price trends, trading signals, and holding periods.
+
+## 5\. Limitations and Considerations
+
+Although the notebook provides a useful introduction to trading simulations and backtesting, several factors should be considered before using the strategy with real funds.
+
+- **Transaction Costs:** Brokerage fees, taxes, and other trading costs may reduce profitability.
+- **Slippage:** Actual execution prices may differ from the historical closing prices used in the simulation.
+- **Signal Timing:** The implementation should ensure that signals derived from a day's closing price are not executed at that same close unless the execution assumption supports it.
+- **Position Management:** The backtest should explicitly handle open positions, repeated signals, and the valuation of any unsold shares at the end of the period.
+- **Currency Consistency:** Tata Motors is listed in India, so the currency used for historical prices should be reconciled with the stated $10,000 starting capital. The reported return is more interpretable when the portfolio and price data use a consistent currency.
+- **Out-of-Sample Validation:** A profitable historical period does not guarantee future performance. The strategy should be evaluated across different market conditions and separate validation periods.
+- **Benchmark Comparison:** Comparing the strategy against a buy-and-hold approach can help establish whether its trading rules provide additional value.
+
+## Conclusion
+
+This notebook demonstrates an end-to-end introduction to stock trading systems, combining a pure Python portfolio simulator with a historical, rule-based backtesting framework.
+
+The first component illustrates portfolio management and transactional controls. The second uses historical market data, consecutive price movements, and profit-based exit conditions to simulate trading activity and visualize the results.
+
+The reported **16% historical return** provides an initial performance measure for the selected strategy and period. However, transaction costs, realistic execution assumptions, currency consistency, and further validation should be addressed before treating this result as evidence of repeatable profitability.
